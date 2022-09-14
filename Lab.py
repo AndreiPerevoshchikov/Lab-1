@@ -13,6 +13,7 @@ with open('books.csv', 'r') as csvfile:
     tags_array = []
     flag = 0
     bible = 20
+    numbers = []
     if search == '1':
         for i in range(bible):
             id_array.append(input('Введите ID искомой книги '))
@@ -48,13 +49,28 @@ with open('books.csv', 'r') as csvfile:
         elif(flag == 1) and (z < 22) and (z > 1):
             f.write('<' + str(surname[0]) + '>. <' + str(row[1]) + '> - <' + str(year) + '>' + '\n')
 
-
+        if z>0:
+            numbers.append(int(row[8]))
 
     print('Всего записей:', z)
     print('Количество записей длиной > 30:', title)
     tags_array.pop(0)
     tags_array.pop(0)
     print(tags_array)
+
+    numbers.sort(reverse=True)
+with open('books.csv', 'r') as csvfile:
+    books = csv.reader(csvfile, delimiter=';')
+    z = -1
+    m = 0
+    books_array = []
+    for row in books:
+        z+=1
+        book = row[1]
+        if (z > 0) and (int(row[8]) == numbers[m]) and (m < 20) and not(book in books_array):
+            books_array.append(book)
+            print(row[1])
+            m+=1
 
 f.close()
 
