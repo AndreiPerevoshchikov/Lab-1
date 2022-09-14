@@ -10,6 +10,7 @@ with open('books.csv', 'r') as csvfile:
     author = input('Введите желаемого автора: ')
     search = input('Введите 1, если хотите ввести 20 ID книг для библиографической ссылки, иначе введите 0 для случайного набора ')
     id_array = []
+    tags_array = []
     flag = 0
     bible = 20
     if search == '1':
@@ -34,6 +35,13 @@ with open('books.csv', 'r') as csvfile:
             if (author == str(surname[0])) and int(year) < 2016:
                 print(row[1])
 
+#допнатеги
+        tags = row[12].split('#')
+        for tag in tags:
+            if not(tag in tags_array):
+                tags_array.append(tag)
+
+
         if flag == 0:
             if row[0] in id_array:
                 f.write('<' + str(surname[0]) + '>. <' + str(row[1]) + '> - <' + str(year) + '>' + '\n')
@@ -42,8 +50,12 @@ with open('books.csv', 'r') as csvfile:
 
 
 
-    print(z)
-    print(title)
+    print('Всего записей:', z)
+    print('Количество записей длиной > 30:', title)
+    tags_array.pop(0)
+    tags_array.pop(0)
+    print(tags_array)
+
 f.close()
 
 
